@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface DataDesensitizationMode {
     DesensitizationTypeEnum typeEnum();
-    int startInclude() default -1;
+    int startInclude() default 0;
 
     int endExclude() default 0;
 
