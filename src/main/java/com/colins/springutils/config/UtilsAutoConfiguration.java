@@ -34,12 +34,12 @@ public class UtilsAutoConfiguration {
     }
 
     @Bean
-    public Interceptor fieldDecryInterceptor(MybatisUtilsConfig utilsConfig){
+    public Interceptor fieldDecryInterceptor(UtilsConfig utilsConfig){
         return new MybatisFieldDecryInterceptor(utilsConfig);
     }
 
     @Bean
-    public Interceptor fieldEncryptInterceptor(MybatisUtilsConfig utilsConfig){
+    public Interceptor fieldEncryptInterceptor(UtilsConfig utilsConfig){
         return new MybatisFieldEncryptInterceptor(utilsConfig);
     }
 
