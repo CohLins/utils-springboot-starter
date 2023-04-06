@@ -5,6 +5,7 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import com.colins.springutils.config.UtilsConfig;
 import com.colins.springutils.encryption.IEncryptAndDecryStrategy;
+import org.jsoup.helper.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,8 @@ public class RSAEncryptAndDecryStrategy implements IEncryptAndDecryStrategy {
     @Override
     public String encrypt(String value) {
         try{
-            value = SecureUtil.rsa(privateKey,publicKey).encryptBase64(value, KeyType.PrivateKey);
+            String reaResult = SecureUtil.rsa(privateKey,publicKey).encryptBase64(value, KeyType.PrivateKey);
+            return StringUtil.isBlank(reaResult) ? value : reaResult;
         }catch (Exception e){
             log.warn("Mybatis RSA Encrypt Fail：{}",e.getMessage());
         }
@@ -34,7 +36,8 @@ public class RSAEncryptAndDecryStrategy implements IEncryptAndDecryStrategy {
     @Override
     public String decrypt(String value) {
         try{
-            value = SecureUtil.rsa(privateKey,publicKey).decryptStr(value, KeyType.PublicKey);
+            String reaResult = SecureUtil.rsa(privateKey,publicKey).decryptStr(value, KeyType.PublicKey);
+            return StringUtil.isBlank(reaResult) ? value : reaResult;
         }catch (Exception e){
             log.warn("Mybatis RSA Decrypt Fail：{}",e.getMessage());
         }

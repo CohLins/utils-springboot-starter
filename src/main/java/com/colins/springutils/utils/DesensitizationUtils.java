@@ -21,7 +21,7 @@ import java.util.Map;
 public class DesensitizationUtils {
     private static final Logger log = LoggerFactory.getLogger(DesensitizationUtils.class);
     private static final char DEFAULT_REPLACE_CHAR_SYMBOL = '*';
-    private static final int VOID_START_INDEX = -1;
+    private static final int VOID_START_INDEX = 0;
 
     private DesensitizationUtils() {
     }

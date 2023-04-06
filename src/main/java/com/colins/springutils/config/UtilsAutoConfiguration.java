@@ -7,6 +7,7 @@ import com.colins.springutils.desensitization.impl.EntityTypeHandler;
 import com.colins.springutils.encryption.MybatisFieldDecryInterceptor;
 import com.colins.springutils.encryption.MybatisFieldEncryptInterceptor;
 import com.colins.springutils.log.MybatisLogInterceptor;
+import org.apache.ibatis.plugin.Interceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,24 +22,24 @@ public class UtilsAutoConfiguration {
 
 
     @Bean
-    @ConditionalOnProperty(prefix = "my-utils.config.sqlLog" ,havingValue = "true" )
-    public MybatisLogInterceptor mybatisLogInterceptor(){
+    @ConditionalOnProperty(value = "my-utils.config.sql-log" ,havingValue = "true" )
+    public Interceptor mybatisLogInterceptor(){
         return new MybatisLogInterceptor();
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = "my-utils.config.requestLog" ,havingValue = "true" )
+    @ConditionalOnProperty(value = "my-utils.config.request-log" ,havingValue = "true" )
     public RequestLogAspect requestLogAspect(){
         return new RequestLogAspect();
     }
 
     @Bean
-    public MybatisFieldDecryInterceptor fieldDecryInterceptor(UtilsConfig utilsConfig){
+    public Interceptor fieldDecryInterceptor(MybatisUtilsConfig utilsConfig){
         return new MybatisFieldDecryInterceptor(utilsConfig);
     }
 
     @Bean
-    public MybatisFieldEncryptInterceptor fieldEncryptInterceptor(UtilsConfig utilsConfig){
+    public Interceptor fieldEncryptInterceptor(MybatisUtilsConfig utilsConfig){
         return new MybatisFieldEncryptInterceptor(utilsConfig);
     }
 
