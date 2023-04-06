@@ -3,7 +3,7 @@ package com.colins.springutils.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("my-utils.config")
-public class MybatisUtilsConfig {
+public class UtilsConfig {
     private boolean sqlLog;   // sql日志
     private boolean requestLog; // 请求日志
     private String aesKey;

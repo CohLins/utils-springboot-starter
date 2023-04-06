@@ -1,8 +1,7 @@
 package com.colins.springutils.config;
 
 
-import com.colins.springutils.aspect.DataDesensitizationAspect;
-import com.colins.springutils.aspect.RequestLogAspect;
+import com.colins.springutils.aspect.*;
 import com.colins.springutils.desensitization.DesensitizationTypeHandler;
 import com.colins.springutils.desensitization.impl.EntityTypeHandler;
 import com.colins.springutils.encryption.MybatisFieldDecryInterceptor;
@@ -16,8 +15,8 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@EnableConfigurationProperties({MybatisUtilsConfig.class})
-public class MybatisUtilsAutoConfiguration {
+@EnableConfigurationProperties({UtilsConfig.class})
+public class UtilsAutoConfiguration {
 
 
 
@@ -34,12 +33,12 @@ public class MybatisUtilsAutoConfiguration {
     }
 
     @Bean
-    public MybatisFieldDecryInterceptor fieldDecryInterceptor(MybatisUtilsConfig utilsConfig){
+    public MybatisFieldDecryInterceptor fieldDecryInterceptor(UtilsConfig utilsConfig){
         return new MybatisFieldDecryInterceptor(utilsConfig);
     }
 
     @Bean
-    public MybatisFieldEncryptInterceptor fieldEncryptInterceptor(MybatisUtilsConfig utilsConfig){
+    public MybatisFieldEncryptInterceptor fieldEncryptInterceptor(UtilsConfig utilsConfig){
         return new MybatisFieldEncryptInterceptor(utilsConfig);
     }
 
@@ -53,5 +52,20 @@ public class MybatisUtilsAutoConfiguration {
     @Bean
     public DataDesensitizationAspect dataDesensitizationAspect(DesensitizationTypeHandler typeHandler){
         return new DataDesensitizationAspect(typeHandler);
+    }
+
+    @Bean
+    public HystrixAspect hystrixAspect(){
+        return new HystrixAspect();
+    }
+
+    @Bean
+    public RateLimiterAspect rateLimiterAspect(){
+        return new RateLimiterAspect();
+    }
+
+    @Bean
+    public RetryAspect retryAspect(){
+        return new RetryAspect();
     }
 }

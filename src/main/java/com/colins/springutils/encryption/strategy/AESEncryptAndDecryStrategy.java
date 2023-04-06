@@ -4,7 +4,7 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
 
-import com.colins.springutils.config.MybatisUtilsConfig;
+import com.colins.springutils.config.UtilsConfig;
 import com.colins.springutils.encryption.IEncryptAndDecryStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +16,8 @@ public class AESEncryptAndDecryStrategy implements IEncryptAndDecryStrategy {
     private final SymmetricCrypto aes;
 
 
-    public AESEncryptAndDecryStrategy(MybatisUtilsConfig mybatisUtilsConfig){
-        this.aes= SecureUtil.aes(SecureUtil.generateKey(SymmetricAlgorithm.AES.getValue(),mybatisUtilsConfig.getAesKey().getBytes()).getEncoded());
+    public AESEncryptAndDecryStrategy(UtilsConfig utilsConfig){
+        this.aes= SecureUtil.aes(SecureUtil.generateKey(SymmetricAlgorithm.AES.getValue(), utilsConfig.getAesKey().getBytes()).getEncoded());
     }
 
     @Override

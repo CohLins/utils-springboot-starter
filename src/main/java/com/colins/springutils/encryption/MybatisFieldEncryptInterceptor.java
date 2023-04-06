@@ -2,7 +2,7 @@ package com.colins.springutils.encryption;
 
 
 import com.colins.springutils.annotation.EncryptAndDecry;
-import com.colins.springutils.config.MybatisUtilsConfig;
+import com.colins.springutils.config.UtilsConfig;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -31,10 +31,10 @@ public class MybatisFieldEncryptInterceptor implements Interceptor {
 
     private final static Logger log = LoggerFactory.getLogger(MybatisFieldEncryptInterceptor.class);
 
-    private final MybatisUtilsConfig mybatisUtilsConfig;
+    private final UtilsConfig utilsConfig;
 
-    public MybatisFieldEncryptInterceptor(MybatisUtilsConfig mybatisUtilsConfig){
-        this.mybatisUtilsConfig=mybatisUtilsConfig;
+    public MybatisFieldEncryptInterceptor(UtilsConfig utilsConfig){
+        this.utilsConfig = utilsConfig;
     }
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -56,8 +56,8 @@ public class MybatisFieldEncryptInterceptor implements Interceptor {
             if (method.getName().equalsIgnoreCase(methodName) && method.isAnnotationPresent(EncryptAndDecry.class)) {
                 EncryptAndDecry annotation = method.getAnnotation(EncryptAndDecry.class);
                 if (annotation.dbFieldName().length > 0) {
-                    Constructor<? extends IEncryptAndDecryStrategy> constructor = annotation.strategy().getConstructor(MybatisUtilsConfig.class);
-                    IEncryptAndDecryStrategy iEncryptAndDecryStrategy = constructor.newInstance(mybatisUtilsConfig);
+                    Constructor<? extends IEncryptAndDecryStrategy> constructor = annotation.strategy().getConstructor(UtilsConfig.class);
+                    IEncryptAndDecryStrategy iEncryptAndDecryStrategy = constructor.newInstance(utilsConfig);
                     valueEncrypt(configuration, boundSql, annotation.dbFieldName(), iEncryptAndDecryStrategy);
                 }
             }

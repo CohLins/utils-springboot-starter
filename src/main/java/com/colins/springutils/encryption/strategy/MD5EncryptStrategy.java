@@ -1,14 +1,14 @@
 package com.colins.springutils.encryption.strategy;
 
 import cn.hutool.crypto.digest.MD5;
-import com.colins.springutils.config.MybatisUtilsConfig;
+import com.colins.springutils.config.UtilsConfig;
 import com.colins.springutils.encryption.IEncryptAndDecryStrategy;
 
 
 
 public class MD5EncryptStrategy implements IEncryptAndDecryStrategy {
 
-    public MD5EncryptStrategy(MybatisUtilsConfig mybatisUtilsConfig){
+    public MD5EncryptStrategy(UtilsConfig utilsConfig){
 
     }
 

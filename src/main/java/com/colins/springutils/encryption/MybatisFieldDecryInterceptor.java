@@ -2,7 +2,7 @@ package com.colins.springutils.encryption;
 
 
 import com.colins.springutils.annotation.EncryptAndDecry;
-import com.colins.springutils.config.MybatisUtilsConfig;
+import com.colins.springutils.config.UtilsConfig;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
@@ -38,10 +38,10 @@ public class MybatisFieldDecryInterceptor implements Interceptor {
     private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
     private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
     private static final ReflectorFactory REFLECTOR_FACTORY = new DefaultReflectorFactory();
-    private final MybatisUtilsConfig mybatisUtilsConfig;
+    private final UtilsConfig utilsConfig;
 
-    public MybatisFieldDecryInterceptor(MybatisUtilsConfig mybatisUtilsConfig){
-        this.mybatisUtilsConfig=mybatisUtilsConfig;
+    public MybatisFieldDecryInterceptor(UtilsConfig utilsConfig){
+        this.utilsConfig = utilsConfig;
     }
 
 
@@ -56,8 +56,8 @@ public class MybatisFieldDecryInterceptor implements Interceptor {
         EncryptAndDecry annotation = getEncryptAndDecryAnnotation(mappedStatement);
         Object returnValue = invocation.proceed();
         if (annotation != null && returnValue != null) {
-            Constructor<? extends IEncryptAndDecryStrategy> constructor = annotation.strategy().getConstructor(MybatisUtilsConfig.class);
-            IEncryptAndDecryStrategy iEncryptAndDecryStrategy = constructor.newInstance(mybatisUtilsConfig);
+            Constructor<? extends IEncryptAndDecryStrategy> constructor = annotation.strategy().getConstructor(UtilsConfig.class);
+            IEncryptAndDecryStrategy iEncryptAndDecryStrategy = constructor.newInstance(utilsConfig);
             List<String> decryptField = Arrays.asList(annotation.dbFieldName());
             // 对结果进行处理
             if (returnValue instanceof ArrayList<?>) {
