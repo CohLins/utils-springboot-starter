@@ -37,7 +37,7 @@ public class HystrixAspect {
         int cpuLimit = hystrix.cpuLimit() <= 0 || hystrix.cpuLimit() > 100 ? HystrixUtils.DEFAULT_CPU_LIMIT : hystrix.cpuLimit();
         int heapMemoryLimit = hystrix.heapMemoryLimit() <= 0 || hystrix.heapMemoryLimit() > 100 ? HystrixUtils.DEFAULT_HEAP_MEMORY_LIMIT : hystrix.heapMemoryLimit();
         if (HystrixUtils.getCurrentCpu() >= cpuLimit || HystrixUtils.getCurrentHeapMemory() >= heapMemoryLimit) {
-            return hystrixResult(hystrix.hystrixMsg());
+            return this.hystrixResult(hystrix.hystrixMsg());
         }
         if (hystrix.errorNumLimit() > 0 || (hystrix.errorRatioLimit() > 0 && hystrix.errorRatioLimit() <= 100)) {
             // 异常相关熔断判断
@@ -48,7 +48,7 @@ public class HystrixAspect {
             // 方法执行前 异常指标就超了就直接返回了
             if ((hystrix.errorRatioLimit() > 0 && hystrix.errorRatioLimit() <= 100 && HystrixUtils.getCurrentErrorRatio(windowValues) > hystrix.errorRatioLimit())
                     || (hystrix.errorNumLimit() > 0 && HystrixUtils.getCurrentErrorCount(windowValues) > hystrix.errorNumLimit())) {
-                return hystrixResult(hystrix.hystrixMsg());
+                return this.hystrixResult(hystrix.hystrixMsg());
             }
             Object result=null;
             try {
