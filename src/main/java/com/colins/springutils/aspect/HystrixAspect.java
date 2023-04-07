@@ -50,14 +50,16 @@ public class HystrixAspect {
                     || (hystrix.errorNumLimit() > 0 && HystrixUtils.getCurrentErrorCount(windowValues) > hystrix.errorNumLimit())) {
                 return hystrixResult(hystrix.hystrixMsg());
             }
+            Object result=null;
             try {
-                return joinPoint.proceed();
+                 result=joinPoint.proceed();
             } catch (Exception e) {
-                windowArray.getWindowValue().addErrorCount();
+                windowArray.currentWindow().getHystrixEntity().addErrorCount();
                 throw e;
             } finally {
-                windowArray.getWindowValue().addRequestCount();
+                windowArray.currentWindow().getHystrixEntity().addRequestCount();
             }
+            return result;
         }
         return joinPoint.proceed();
     }
