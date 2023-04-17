@@ -28,7 +28,6 @@ public class UtilsAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "my-utils.config.request-log" ,havingValue = "true" )
     public RequestLogAspect requestLogAspect(){
         return new RequestLogAspect();
     }
