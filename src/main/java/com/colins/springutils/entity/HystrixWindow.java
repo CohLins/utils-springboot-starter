@@ -1,17 +1,12 @@
 package com.colins.springutils.entity;
 
-/**
- * @Description
- * @Author czl
- * @Version V1.0.0
- * @Since 1.0
- * @Date 2023/4/6
- */
+
 public class HystrixWindow {
+    // 窗口的长度 单位：ms
     private final int windowLengthInMs;
-
+    // 窗口的开始时间戳  单位：ms
     private long windowStartInMs;
-
+    // 窗口内存放的实体类
     private HystrixEntity hystrixEntity;
 
     public HystrixWindow(int windowLengthInMs, long windowStartInMs, HystrixEntity hystrixEntity) {
@@ -37,7 +32,6 @@ public class HystrixWindow {
     }
 
     /**
-     * @Author czl
      * @Description 重置窗口
      **/
     public HystrixWindow resetTo(long startTime) {
@@ -47,7 +41,6 @@ public class HystrixWindow {
     }
 
     /**
-     * @Author czl
      * @Description 判断时间是否属于该窗口
      **/
     public boolean isTimeInWindow(long timeMillis) {

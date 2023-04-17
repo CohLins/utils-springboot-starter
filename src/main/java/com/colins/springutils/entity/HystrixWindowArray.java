@@ -9,10 +9,13 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class HystrixWindowArray {
+    // 单个窗口的长度
     private int windowLengthInMs;
+    // 窗口数量
     private int sampleCount;
+    // 所有窗口的总长度
     private int intervalInMs;
-
+    // 窗口数组
     private final AtomicReferenceArray<HystrixWindow> array;
 
     /**
@@ -20,7 +23,10 @@ public class HystrixWindowArray {
      */
     private final ReentrantLock updateLock = new ReentrantLock();
 
-
+    /**
+     * @Param [sampleCount, intervalInMs]
+     * sampleCount: 窗口数量  intervalInMs：所有窗口的总长度
+     **/
     public HystrixWindowArray(int sampleCount, int intervalInMs) {
         Assert.isTrue(sampleCount > 0, "bucket count is invalid: " + sampleCount);
         Assert.isTrue(intervalInMs > 0, "total time interval of the sliding window should be positive");
@@ -70,13 +76,6 @@ public class HystrixWindowArray {
         // Calculate current bucket start time.
         long windowStart = calculateWindowStart(timeMillis);
 
-        /*
-         * 根据当前时间获取时间窗口对象
-         *
-         * (1) 如果获取为空，说明窗口还没创建，所以我们创建一个新的窗口(CAS保证线程安全)
-         * (2) Bucket is up-to-date, then just return the bucket.
-         * (3) Bucket is deprecated, then reset current bucket and clean all deprecated buckets.
-         */
         while (true) {
             HystrixWindow old = array.get(idx);
             if (old == null) {

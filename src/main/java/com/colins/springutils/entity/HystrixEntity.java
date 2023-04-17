@@ -2,15 +2,11 @@ package com.colins.springutils.entity;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @Description
- * @Author czl
- * @Version V1.0.0
- * @Since 1.0
- * @Date 2023/4/6
- */
+
 public class HystrixEntity {
+    // 窗口请求数
     private AtomicInteger requestCount;
+    // 窗口异常数
     private AtomicInteger errorCount;
 
     public HystrixEntity(){
