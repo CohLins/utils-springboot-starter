@@ -23,13 +23,13 @@
 
   需要在配置文件中配置开启日志打印
 
-  ![](https://secure2.wostatic.cn/static/wMNoXFZimw9EFE9c3mLTQr/image.png)
+  ![输入图片说明](image.png)
 
 - **数据自动加解密**
   1. 在Mapper中加上@EncryptAndDecry注解，并选择加解密方式以及加解密字段(实体类中的)
   2. 如下(查询自动解密，更新或插入自动加密)：
 
-      ![](https://secure2.wostatic.cn/static/sbtDDGcsnork8JHEqLNUsB/image.png)
+     ![输入图片说明](image1.png)
   3. 说明：MD5只能加密，AES、RAS加解密还需要在配置文件中配置KEY：
 
 ```Java
@@ -57,13 +57,13 @@ my-utils:
 - **服务治理**
   1. 接口限流：接口打上@AnRateLimiter注解：
 
-      ![](https://secure2.wostatic.cn/static/kmhwKoy4TzDyacPVZnxyrq/image.png)
+      ![输入图片说明](image3.png)
   2. 熔断降级：接口打上@AnHystrix注解（支持4个指标CPU、内存、异常数、异常率）
 
-      ![](https://secure2.wostatic.cn/static/tDCkkt81xdLfTF4bk8CRjt/image.png)
+      ![输入图片说明](image4.png)
   3. 方法重试机制：方法上打上@AnRetry注解（重试需注意事务等问题）
 
-      ![](https://secure2.wostatic.cn/static/qs1ZBzr8LKknTj5MZArrkq/image.png)
+     ![输入图片说明](image5.png)
 
 
 
